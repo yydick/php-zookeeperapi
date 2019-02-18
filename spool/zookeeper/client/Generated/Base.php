@@ -10,9 +10,7 @@ namespace Spool\Zookeeper\Client\Generated;
  *
  * @author 陈浩波
  */
-interface Base extends \Serializable {
-    public function serialize() : string;
-    public function unserialize(string $str) : Mixed;
-    public function __toString() : string;
-    public function __invoke() : void;
+interface Base {
+    public function serialize() : int;
+    public function unserialize() : int;
 }

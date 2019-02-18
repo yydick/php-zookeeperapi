@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Spool\Zookeeper\Client\Generated;
+namespace Spool\Zookeeper\Client\Classes;
 
 /**
  * Description of Buffer
@@ -14,8 +14,10 @@ namespace Spool\Zookeeper\Client\Generated;
  * @author 陈浩波
  */
 class Buffer {
-    static public $buff;
-    static public function len() {
-	return strlen(self::$buff);
+    public $len;
+    public $buff;
+    public function __construct(int $len = 0, string $buff = '') {
+	$this->len = $len;
+	$this->buff = $buff;
     }
 }

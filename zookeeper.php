@@ -6,4 +6,15 @@
  * 任何人使用时请保留该声明
  */
 define('BIG_ENDIAN', pack('L', 1) === pack('N', 1));
-include_once 'spool/zookeeper/client/lib/Loader.php';
+defined("LIB_PATH") || define("LIB_PATH", '');
+include_once 'spool/Zookeeper/Client/Lib/Proto.php';
+include_once 'spool/Zookeeper/Client/Lib/Loader.php';
+
+use Spool\Zookeeper\Client\Lib\Loader;
+use Spool\Zookeeper\Client\Generated\Acl;
+
+Loader::register();
+
+$acl = new Acl();
+
+echo "Hello world!\n";

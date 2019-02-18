@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Spool\Zookeeper\Client\Generated;
+namespace Spool\Zookeeper\Client\Classes;
 
 use Spool\Zookeeper\Client\Lib\ZookeeperException;
 /**

@@ -5,7 +5,7 @@
  * 由陈浩波编写完成
  * 任何人使用时请保留该声明
  */
-namespace SPOOL\ZOOKEEPER\CLIENT;
+namespace Spool\Zookeeper\Client;
 
 interface zookeeper {
 /* 方法 */

@@ -69,7 +69,7 @@ class Loader
      * @param  string $class 类名
      * @return bool
      */
-    public static function autoload($class)
+    public static function fautoload($class)
     {
         // 检测命名空间别名
         if (!empty(self::$namespaceAlias)) {
@@ -114,6 +114,7 @@ class Loader
             foreach (self::$prefixLengthsPsr4[$first] as $prefix => $length) {
                 if (0 === strpos($class, $prefix)) {
                     foreach (self::$prefixDirsPsr4[$prefix] as $dir) {
+//			echo __LINE__ . ' ' . $dir . DS . substr($logicalPathPsr4, $length) . "\n";
                         if (is_file($file = $dir . DS . substr($logicalPathPsr4, $length))) {
                             return $file;
                         }
@@ -124,6 +125,7 @@ class Loader
 
         // 查找 PSR-4 fallback dirs
         foreach (self::$fallbackDirsPsr4 as $dir) {
+//	    echo __LINE__ . ' ' . $dir . DS . $logicalPathPsr4 . "\n";
             if (is_file($file = $dir . DS . $logicalPathPsr4)) {
                 return $file;
             }
@@ -143,6 +145,7 @@ class Loader
             foreach (self::$prefixesPsr0[$first] as $prefix => $dirs) {
                 if (0 === strpos($class, $prefix)) {
                     foreach ($dirs as $dir) {
+//			echo __LINE__ . ' ' . $dir . DS . $logicalPathPsr0 . "\n";
                         if (is_file($file = $dir . DS . $logicalPathPsr0)) {
                             return $file;
                         }
@@ -153,6 +156,7 @@ class Loader
 
         // 查找 PSR-0 fallback dirs
         foreach (self::$fallbackDirsPsr0 as $dir) {
+//	    echo __LINE__ . ' ' . $dir . DS . $logicalPathPsr0 . "\n";
             if (is_file($file = $dir . DS . $logicalPathPsr0)) {
                 return $file;
             }
@@ -285,7 +289,7 @@ class Loader
     public static function register($autoload = null)
     {
         // 注册系统自动加载
-        spl_autoload_register($autoload ?: 'think\\Loader::autoload', true, true);
+        spl_autoload_register($autoload ?: 'Spool\\Zookeeper\\Client\\Lib\\Loader::fautoload', true, true);
 
         // Composer 自动加载支持
         if (is_dir(VENDOR_PATH . 'composer')) {
@@ -307,9 +311,7 @@ class Loader
 
         // 注册命名空间定义
         self::addNamespace([
-            'think'    => LIB_PATH . 'think' . DS,
-            'behavior' => LIB_PATH . 'behavior' . DS,
-            'traits'   => LIB_PATH . 'traits' . DS,
+            'Spool'    => LIB_PATH . 'spool' . DS,
         ]);
 
         // 加载类库映射文件
@@ -557,18 +559,6 @@ class Loader
         }
 
         return [$module, $class];
-    }
-
-    /**
-     * 数据库初始化 并取得数据库类实例
-     * @access public
-     * @param  mixed       $config 数据库配置
-     * @param  bool|string $name   连接标识 true 强制重新连接
-     * @return \think\db\Connection
-     */
-    public static function db($config = [], $name = false)
-    {
-        return Db::connect($config, $name);
     }
 
     /**
