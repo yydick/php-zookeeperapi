@@ -12,9 +12,11 @@ include_once 'spool/Zookeeper/Client/Lib/Loader.php';
 
 use Spool\Zookeeper\Client\Lib\Loader;
 use Spool\Zookeeper\Client\Generated\Acl;
+use Spool\Zookeeper\Client\Zoo\CompletionT;
 
 Loader::register();
 
 $acl = new Acl();
-
+$c = new CompletionT();
 echo "Hello world!\n";
+echo $c->type, "\n";

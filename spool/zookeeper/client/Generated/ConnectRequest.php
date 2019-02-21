@@ -36,7 +36,7 @@ class ConnectRequest {
 	$rc = $rc ?: $out->serializeLong('lastZxidSeen', $v->lastZxidSeen);
 	$rc = $rc ?: $out->serializeInt('timeOut', $v->timeOut);
 	$rc = $rc ?: $out->serializeLong('sessionId', $v->sessionId);
-	$rc = $rc ?: $out->serializeInt('passwd', $v->passwd);
+	$rc = $rc ?: $out->serializeBuffer('passwd', $v->passwd);
 	$rc = $rc ?: $out->endRecord($tag);
 	return $rc;
     }
@@ -46,7 +46,7 @@ class ConnectRequest {
 	$rc = $rc ?: $in->deserializeLong('lastZxidSeen', $v->mzxid);
 	$rc = $rc ?: $in->deserializeInt('timeOut', $v->ctime);
 	$rc = $rc ?: $in->deserializeLong('sessionId', $v->mtime);
-	$rc = $rc ?: $in->deserializeInt('passwd', $v->version);
+	$rc = $rc ?: $in->deserializeBuffer('passwd', $v->version);
 	$rc = $rc ?: $in->endRecord($tag);
 	return $rc;
     }

@@ -12,42 +12,36 @@ namespace Spool\Zookeeper\Client\Generated;
 use Spool\Zookeeper\Client\Classes\Oarchive;
 use Spool\Zookeeper\Client\Classes\Iarchive;
 use Spool\Zookeeper\Client\Classes\Buffer;
-use Spool\Zookeeper\Client\Generated\AclVector;
-
 /**
- * Description of CreateRequest
+ * Description of SetDataTxn
  *
  * @author 陈浩波
  */
-class CreateRequest {
+class SetDataTxn {
 
     public $path;	      //string
     public $data;	      //obj buffer
-    public $acl;	      //obj AclVector
-    public $flags;	      //int32
+    public $version;	      //int32_t
 
     public function __construct() {
 	$this->path = '';
 	$this->data = new Buffer();
-	$this->acl = new AclVector();
-	$this->flags = 0;
+	$this->version = 0;
     }
-    public function serialize(Oarchive &$out, string $tag, CreateRequest &$v): int {
+    public function serialize(Oarchive &$out, string $tag, SetDataTxn &$v): int {
 	$rc = $out->startRecord($tag);
 	$rc = $rc ?: $out->serializeString('path', $v->path);
-	$rc = $rc ?: $out->serializeBuffer($out, 'data', $v->data);
-	$rc = $rc ?: $this->acl->serialize($out, 'acl', $v->acl);
-	$rc = $rc ?: $out->serializeInt('flags', $v->flags);
+	$rc = $rc ?: $out->serializeBuffer('data', $v->data);
+	$rc = $rc ?: $out->serializeInt('version', $v->version);
 	$rc = $rc ?: $out->endRecord($tag);
 	return $rc;
     }
 
-    public function unserialize(Iarchive &$in, string $tag, CreateRequest &$v): int {
+    public function unserialize(Iarchive &$in, string $tag, SetDataTxn &$v): int {
 	$rc = $in->startRecord($tag);
 	$rc = $rc ?: $in->deserializeString('path', $v->path);
-	$rc = $rc ?: $in->deserializeBuffer($in, 'data', $v->data);
-	$rc = $rc ?: $this->acl->unserialize($in, 'acl', $v->acl);
-	$rc = $rc ?: $in->deserializeInt('flags', $v->flags);
+	$rc = $rc ?: $in->deserializeBuffer('data', $v->data);
+	$rc = $rc ?: $in->deserializeInt('version', $v->version);
 	$rc = $rc ?: $in->endRecord($tag);
 	return $rc;
     }

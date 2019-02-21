@@ -13,41 +13,40 @@ use Spool\Zookeeper\Client\Classes\Oarchive;
 use Spool\Zookeeper\Client\Classes\Iarchive;
 use Spool\Zookeeper\Client\Classes\Buffer;
 use Spool\Zookeeper\Client\Generated\AclVector;
-
 /**
- * Description of CreateRequest
+ * Description of QuorumAuthPacket
  *
  * @author 陈浩波
  */
-class CreateRequest {
+class QuorumAuthPacket {
 
     public $path;	      //string
     public $data;	      //obj buffer
-    public $acl;	      //obj AclVector
-    public $flags;	      //int32
+    public $acl;	      //AclVector
+    public $ephemeral;	      //int32_t
 
     public function __construct() {
 	$this->path = '';
 	$this->data = new Buffer();
 	$this->acl = new AclVector();
-	$this->flags = 0;
+	$this->ephemeral = 0;
     }
-    public function serialize(Oarchive &$out, string $tag, CreateRequest &$v): int {
+    public function serialize(Oarchive &$out, string $tag, QuorumAuthPacket &$v): int {
 	$rc = $out->startRecord($tag);
 	$rc = $rc ?: $out->serializeString('path', $v->path);
-	$rc = $rc ?: $out->serializeBuffer($out, 'data', $v->data);
+	$rc = $rc ?: $out->serializeBuffer('data', $v->data);
 	$rc = $rc ?: $this->acl->serialize($out, 'acl', $v->acl);
-	$rc = $rc ?: $out->serializeInt('flags', $v->flags);
+	$rc = $rc ?: $out->serializeInt('ephemeral', $v->ephemeral);
 	$rc = $rc ?: $out->endRecord($tag);
 	return $rc;
     }
 
-    public function unserialize(Iarchive &$in, string $tag, CreateRequest &$v): int {
+    public function unserialize(Iarchive &$in, string $tag, QuorumAuthPacket &$v): int {
 	$rc = $in->startRecord($tag);
 	$rc = $rc ?: $in->deserializeString('path', $v->path);
-	$rc = $rc ?: $in->deserializeBuffer($in, 'data', $v->data);
+	$rc = $rc ?: $in->deserializeBuffer('data', $v->data);
 	$rc = $rc ?: $this->acl->unserialize($in, 'acl', $v->acl);
-	$rc = $rc ?: $in->deserializeInt('flags', $v->flags);
+	$rc = $rc ?: $in->deserializeInt('ephemeral', $v->ephemeral);
 	$rc = $rc ?: $in->endRecord($tag);
 	return $rc;
     }

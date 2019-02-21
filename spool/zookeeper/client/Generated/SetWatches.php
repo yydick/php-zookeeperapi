@@ -30,18 +30,18 @@ class SetWatches {
     public function serialize(Oarchive &$out, string $tag, SetWatches &$v) {
 	$rc = $out->startRecord($tag);
 	$rc = $rc ?: $out->serializeLong('relativeZxid', $v->relativeZxid);
-	$rc = $rc ?: $v->serialize($out, 'dataWatches', $v->dataWatches);
-	$rc = $rc ?: $v->serialize($out, 'existWatches', $v->existWatches);
-	$rc = $rc ?: $v->serialize($out, 'childWatches', $v->childWatches);
+	$rc = $rc ?: $this->dataWatches->serialize($out, 'dataWatches', $v->dataWatches);
+	$rc = $rc ?: $this->existWatches->serialize($out, 'existWatches', $v->existWatches);
+	$rc = $rc ?: $this->childWatches->serialize($out, 'childWatches', $v->childWatches);
 	$rc = $rc ?: $out->endRecord($tag);
 	return $rc;
     }
-    public function deserialize(Oarchive &$in, string $tag, SetWatches &$v) {
+    public function deserialize(Iarchive &$in, string $tag, SetWatches &$v) {
 	$rc = $in->startRecord($tag);
 	$rc = $rc ?: $in->serializeLong('relativeZxid', $v->relativeZxid);
-	$rc = $rc ?: $v->deserialize($in, 'dataWatches', $v->dataWatches);
-	$rc = $rc ?: $v->deserialize($in, 'existWatches', $v->existWatches);
-	$rc = $rc ?: $v->deserialize($in, 'childWatches', $v->childWatches);
+	$rc = $rc ?: $this->dataWatches->deserialize($in, 'dataWatches', $v->dataWatches);
+	$rc = $rc ?: $this->existWatches->deserialize($in, 'existWatches', $v->existWatches);
+	$rc = $rc ?: $this->childWatches->deserialize($in, 'childWatches', $v->childWatches);
 	$rc = $rc ?: $in->endRecord($tag);
 	return $rc;
     }
